@@ -87,7 +87,7 @@ class TelegramHandler extends AbstractProcessingHandler
         $date = date($this->dateFormat);
         $message = $date . PHP_EOL . $this->emojiMapping[$record['level']] . ' ' . $record['formatted'] . $context;
 
-        $this->send($message);
+        $this->send(substr($message,0,200).'...');
 
     }
 
@@ -105,7 +105,7 @@ class TelegramHandler extends AbstractProcessingHandler
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array(
-                'text'    => $message,
+                'text'    => substr($message,0,200).'...',
                 'chat_id' => $this->channel,
                 $options,
             )));
